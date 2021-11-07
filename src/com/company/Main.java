@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static double price = 0;
     public static ArrayList<String> information = new ArrayList<>();
+    public static int numOfToppings = 0;
     static String Sizes(char l){
         double[] priceSizes = {7.99, 10.99, 13.99};
         if (l == 'l'||l =='L'){
@@ -25,34 +26,37 @@ public class Main {
         }
     }
 
-    static String Toppings(String t){
-        double[] priceToppings = {2.00, 5.00, 1.50, 3.56, 4.23, 9.23};
+    static void Toppings(String t){
         if (t.equalsIgnoreCase("fish")){
-            price += priceToppings[0];
             information.add("Fish");
-            return "Fish has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Fish has been added to your pizza");
         }else if (t.equalsIgnoreCase("pineapple")){
-            price += priceToppings[1];
             information.add("Pineapple");
-            return "Pineapple has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Pineapple has been added to your pizza");
         }else if (t.equalsIgnoreCase("anchovies")){
-            price += priceToppings[2];
             information.add("Anchovies");
-            return "Anchovies has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Anchovies has been added to your pizza");
         }else if (t.equalsIgnoreCase("pepperoni")){
-            price += priceToppings[3];
             information.add("Pepperoni");
-            return "Pepperoni has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Pepperoni has been added to your pizza");
         }else if (t.equalsIgnoreCase("chicken")){
-            price += priceToppings[4];
             information.add("Chicken");
-            return "Chicken has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Chicken has been added to your pizza");
         }else if (t.equalsIgnoreCase("beef")){
-            price += priceToppings[5];
             information.add("Beef");
-            return "Beef has been added to your pizza";
+            numOfToppings ++;
+            System.out.println("Beef has been added to your pizza");
+        }else if (t.equalsIgnoreCase("cheese")){
+            information.add("Cheese");
+            numOfToppings ++;
+            System.out.println("Cheese has been added to your pizza");
         }else{
-            return "Error. Try again";
+            System.out.println("Error. Try again");
         }
     }
 
@@ -66,20 +70,25 @@ public class Main {
             sizes=Sizes(input.next().charAt(0));
             System.out.println(sizes);
         }
-        System.out.println("What toppings do you want? (ONLY PICK 2)");
-        System.out.println("We have: Fish, Pineapple, Anchovies, Pepperoni, Chicken, Beef");
-        String toppingOne = Toppings(input.next());
-        String toppingTwo = Toppings(input.next());
-        while(toppingOne.equals("Error. Try again")||toppingTwo.equals("Error. Try again")){
-            System.out.println("What toppings do you want? (ONLY PICK 2)");
-            System.out.println("We have: Fish, Pineapple, Anchovies, Pepperoni, Chicken, Beef");
-            toppingOne = Toppings(input.next());
-            toppingTwo = Toppings(input.next());
+        System.out.println("What toppings do you want?");
+        System.out.println("The first two toppings are free and each one after is an extra £1.25.(Type 'end' to finish your order) : ");
+        System.out.println("We have: Fish, Pineapple, Anchovies, Pepperoni, Chicken, Beef, Cheese");
+        while(true){
+            String topping = input.next();
+            if (topping.equalsIgnoreCase("end")){
+                break;
+            }
+            Toppings(topping);
         }
-
+        numOfToppings -= 2;
+        if (numOfToppings<0){
+            numOfToppings=0;
+        }
+        price += numOfToppings*1.25;
+        System.out.println(numOfToppings);
+        price = Math.round(price*100.0)/100.0;
         System.out.println("Your order is currently: " + information.toString());
-        System.out.println("Your price is: " + price);
-
+        System.out.println("Your price is: £" + price);
 
 
     }
